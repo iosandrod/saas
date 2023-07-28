@@ -194,7 +194,6 @@ model Session {
   operatingSystem String?
   userId          Int
   user            User     @relation("userSession", fields: [userId], references: [id])
-
   @@index([userId], name: "userId")
 }
 

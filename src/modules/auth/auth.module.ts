@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { GeolocationModule } from '../../providers/geolocation/geolocation.module';
 import { MailModule } from '../../providers/mail/mail.module';
 import { PrismaModule } from '../../providers/prisma/prisma.module';
 import { PwnedModule } from '../../providers/pwned/pwned.module';
@@ -24,7 +23,6 @@ import { StaartStrategy } from './staart.strategy';
     PwnedModule,
     ApiKeysModule,
     TwilioModule,
-    GeolocationModule,
     ApprovedSubnetsModule,
   ],
   controllers: [AuthController],

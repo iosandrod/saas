@@ -31,7 +31,6 @@ import { WebhooksModule } from './modules/webhooks/webhooks.module';
 import { CloudinaryModule } from './providers/cloudinary/cloudinary.module';
 import { DnsModule } from './providers/dns/dns.module';
 import { ElasticSearchModule } from './providers/elasticsearch/elasticsearch.module';
-import { GeolocationModule } from './providers/geolocation/geolocation.module';
 import { GitHubModule } from './providers/github/github.module';
 import { GoogleMapsModule } from './providers/google-maps/google-maps.module';
 import { MailModule } from './providers/mail/mail.module';
@@ -63,7 +62,6 @@ import { MetaModule } from './modules/meta/meta.module';
     ApprovedSubnetsModule,
     DomainsModule,
     DnsModule,
-    GeolocationModule,
     MembershipsModule,
     StripeModule,
     AuditLogsModule,

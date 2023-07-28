@@ -14,7 +14,7 @@ import UAParser from 'ua-parser-js';
 import { STAART_AUDIT_LOG_DATA } from '../modules/audit-logs/audit-log.constants';
 import { UserRequest } from '../modules/auth/auth.interface';
 import { WebhooksService } from '../modules/webhooks/webhooks.service';
-import { GeolocationService } from '../providers/geolocation/geolocation.service';
+// import { GeolocationService } from '../providers/geolocation/geolocation.service';
 import { PrismaService } from '../providers/prisma/prisma.service';
 
 @Injectable()
@@ -24,9 +24,9 @@ export class AuditLogger implements NestInterceptor {
   constructor(
     private readonly reflector: Reflector,
     private prisma: PrismaService,
-    private geolocationService: GeolocationService,
+    // private geolocationService: GeolocationService,
     private webhooksService: WebhooksService,
-  ) {}
+  ) { }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     let auditLog = this.reflector.get<string | string[]>(
@@ -41,7 +41,7 @@ export class AuditLogger implements NestInterceptor {
             const request = context.switchToHttp().getRequest() as UserRequest;
             const groupId = parseInt(request.params.groupId);
             const ip = getClientIp(request);
-            const location = await this.geolocationService.getLocation(ip);
+            // const location = await this.geolocationService.getLocation(ip);
             const userAgent = request.get('user-agent');
             const ua = new UAParser(userAgent);
             for await (const rawEvent of auditLog) {
@@ -53,15 +53,14 @@ export class AuditLogger implements NestInterceptor {
               const data: Prisma.AuditLogCreateInput = {
                 event,
                 rawEvent,
-                city: location?.city?.names?.en,
-                region: location?.subdivisions?.pop()?.names?.en,
-                timezone: location?.location?.time_zone,
-                countryCode: location?.country?.iso_code,
+                // city: location?.city?.names?.en,
+                // region: location?.subdivisions?.pop()?.names?.en,
+                // timezone: location?.location?.time_zone,
+                // countryCode: location?.country?.iso_code,
                 userAgent,
                 browser:
-                  `${ua.getBrowser().name ?? ''} ${
-                    ua.getBrowser().version ?? ''
-                  }`.trim() || undefined,
+                  `${ua.getBrowser().name ?? ''} ${ua.getBrowser().version ?? ''
+                    }`.trim() || undefined,
                 operatingSystem:
                   `${ua.getOS().name ?? ''} ${ua.getOS().version ?? ''}`
                     .replace('Mac OS', 'macOS')
@@ -77,7 +76,7 @@ export class AuditLogger implements NestInterceptor {
             }
           }
         })()
-          .then(() => {})
+          .then(() => { })
           .catch((err) => this.logger.error('Unable to save audit log', err));
       }),
     );
